@@ -1,5 +1,5 @@
 from dgl.data import load_data, tu
-from dgl import DGLGraph, transform
+from dgl import DGLGraph, transforms
 import torch
 import torch.utils.data
 import numpy as np
@@ -22,7 +22,7 @@ def pre_process(args,dataset):
         
 
         if args.self_loop:
-            g=dgl.transform.add_self_loop(dataset.graph_lists[i])
+            g=dgl.transforms.add_self_loop(dataset.graph_lists[i])
             g.ndata.update(dataset.graph_lists[i].ndata)
             dataset.graph_lists[i]=g
 

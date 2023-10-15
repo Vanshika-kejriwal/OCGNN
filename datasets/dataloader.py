@@ -1,5 +1,5 @@
 from dgl.data import load_data, tu
-from dgl import DGLGraph, transform
+from dgl import DGLGraph, transforms
 import torch
 import torch.utils.data
 import numpy as np
@@ -17,14 +17,14 @@ def loader(args):
 
     labels,train_mask,val_mask,test_mask=one_class_processing(data,args.normal_class,args)
 
-    features = torch.FloatTensor(data.features)
+    features = torch.FloatTensor(data[0].ndata["feat"])
     labels = torch.LongTensor(labels)
     train_mask = torch.BoolTensor(train_mask)
     val_mask = torch.BoolTensor(val_mask)
     test_mask = torch.BoolTensor(test_mask)
     in_feats = features.shape[1]
     n_classes = data.num_labels
-    n_edges = data.graph.number_of_edges()
+    n_edges = data[0].num_edges()
     print("""----Data statistics------'
       #Edges %d
       #Classes %d

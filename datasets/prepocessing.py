@@ -1,7 +1,7 @@
 import numpy as np
 
 def one_class_processing(data,normal_class:int,args=None):
-    labels,normal_idx,abnormal_idx=one_class_labeling(data.labels,normal_class)
+    labels,normal_idx,abnormal_idx=one_class_labeling(data[0].ndata['label'],normal_class)
     return one_class_masking(args,data,labels,normal_idx,abnormal_idx)
 
 
@@ -13,7 +13,7 @@ def one_class_labeling(labels,normal_class:int):
     labels[abnormal_idx]=1
     np.random.shuffle(normal_idx)
     np.random.shuffle(abnormal_idx)
-    return labels.astype("bool"),normal_idx,abnormal_idx
+    return labels.numpy().astype("bool"),normal_idx,abnormal_idx
 
 #训练集60%正常、验证集15%正常、测试集25%正常，验证集测试集中的正常异常样本1:1
 def one_class_masking(args,data,labels,normal_idx,abnormal_idx):
